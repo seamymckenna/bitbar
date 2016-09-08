@@ -35,6 +35,7 @@ for f in jira.favourite_filters():
     if search(match_filters,f.name):
         tickets[f.name] = jira.search_issues('filter = {}'.format(f.id))
 
+#Count a total of user tickets
 total=0
 for t in tickets:
     for i in tickets[t]:
