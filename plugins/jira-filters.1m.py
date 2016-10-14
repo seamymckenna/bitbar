@@ -52,6 +52,19 @@ for t in tickets:
         try:
             print '-- Status: {}'.format(i.fields.status.name)
             print '-- Assignee: {}'.format(i.fields.assignee.name)
+            # if the ticket has subtasks we add them to a submenu
+            subtasks = i.fields.subtasks
+            if len(subtasks) >= 1:
+              print '-- Subtasks'
+              for subtask in subtasks:
+                link = '{}/browse/{}'.format(jira_uri,subtask.key)
+                print '---- {}: {} | href={}'.format(subtask.key,subtask.fields.summary,link)
+
+            # if the issue has a parent then we list it.
+            if hasattr(i.fields, 'parent'):
+              parent = i.fields.parent
+              link = '{}/browse/{}'.format(jira_uri,parent.key)
+              print '-- Parent: {}: {} | href={}'.format(parent.key,parent.fields.summary,link)
         except:
             pass
     print "---"
